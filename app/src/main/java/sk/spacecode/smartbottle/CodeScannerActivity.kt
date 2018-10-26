@@ -28,7 +28,7 @@ class CodeScannerActivity : AppCompatActivity() {
             Log.e("QR_RESULT", result.toString())
 
             val intent = Intent(this, RegisterBottleActivity::class.java)
-            intent.putExtra("qr_result", result.toString())
+            intent.putExtra("qr_result", result.toString().trim())
             startActivity(intent)
         }
 
