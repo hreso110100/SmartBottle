@@ -2,6 +2,7 @@ package sk.spacecode.smartbottle
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    private fun loadFragment(fragment: Fragment) = supportFragmentManager.beginTransaction().replace(R.id.dashboard_fragment_container, fragment).commit()
+    private fun loadFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().replace(R.id.dashboard_fragment_container, fragment).commit()
 
 
 }
