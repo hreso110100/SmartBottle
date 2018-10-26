@@ -33,7 +33,7 @@ class RegisterBottleActivity : AppCompatActivity() {
             if (password.isNotEmpty()) {
                 val bottle = Bottle(bottleId, password.toString().trim())
 
-                mDatabase!!.child(bottleId).setValue(bottle).addOnCompleteListener { task ->
+                mDatabase!!.child(bottleId).child("login").setValue(bottle).addOnCompleteListener { task ->
                     when {
                         task.isSuccessful -> {
 

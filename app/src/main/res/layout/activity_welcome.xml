@@ -6,34 +6,52 @@ android:layout_height="match_parent"
 android:background="@drawable/bg_gradient"
 tools:context=".WelcomeActivity">
 
+
+    <TextView
+            android:id="@+id/activity_welcome_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Welcome"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:textSize="48sp"
+            android:textStyle="bold"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="Scan the QR code on the bottle and connect it to app"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@+id/activity_welcome_title"
+    android:layout_marginTop="64dp"/>
+
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="40dp"
-        android:paddingRight="40dp">
+        android:paddingRight="40dp"
+        android:layout_marginBottom="184dp">
 
         <ImageView
             android:id="@+id/activity_welcome_iconImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:clickable="true"
             android:src="@drawable/qrcode"
             android:tint="@android:color/white"
             android:focusable="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="Scan the QR code on the bottle and connect it to app"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
     </LinearLayout>
 
     <Button
