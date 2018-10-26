@@ -6,10 +6,13 @@ import android.bluetooth.BluetoothSocket
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import kotlinx.android.synthetic.main.activity_connect_to_bottle.*
 import java.io.IOException
 import java.util.*
 
@@ -18,7 +21,7 @@ class ConnectToBottleActivity : AppCompatActivity() {
     private val bluetoothRequestCode = 1
     private var bluetoothSocket: BluetoothSocket? = null
     private val myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-    private val deviceMAC = "20:13:10:17:10:29"
+    private var device: BluetoothDevice? = null
     private var isDeviceConnected = false
     private var bluetoothAdapter: BluetoothAdapter? = null
     private val logConstantClass = "ConnectToBottleActivity"
@@ -47,27 +50,19 @@ class ConnectToBottleActivity : AppCompatActivity() {
     inner class ConnectToArduino : AsyncTask<Void, Void, Void>() {
         private var connectSuccess = true
 
-        override fun onPreExecute() {
-            Log.i(logConstantClass, "CONNECTING...WAIT")
-        }
-
         override fun doInBackground(vararg devices: Void): Void? {
-            try {
-                val device = bluetoothAdapter?.getRemoteDevice(deviceMAC)
-                device?.createBond()
 
-                val broadcastReceiver = object : BroadcastReceiver() {
-                    override fun onReceive(context: Context?, intent: Intent?) {
-                        if (intent?.action == BluetoothDevice.ACTION_BOND_STATE_CHANGED) {
-                            if (device?.bondState == BluetoothDevice.BOND_BONDED) {
-                                if (bluetoothSocket == null || !isDeviceConnected) {
-                                    bluetoothSocket = device.createInsecureRfcommSocketToServiceRecord(myUUID)
-                                    bluetoothSocket!!.connect()
-                                }
-                            }
-                        }
+            try {
+                device = bluetoothAdapter?.getRemoteDevice(intent.getStringExtra("qr_result").trim())
+                Log.i(logConstantClass, device?.address)
+
+                if (device?.bondState == BluetoothDevice.BOND_BONDED) {
+                    if (bluetoothSocket == null || !isDeviceConnected) {
+                        bluetoothSocket = device?.createInsecureRfcommSocketToServiceRecord(myUUID)
+                        bluetoothSocket!!.connect()
                     }
                 }
+
             } catch (e: IOException) {
                 connectSuccess = false
             }
@@ -79,10 +74,11 @@ class ConnectToBottleActivity : AppCompatActivity() {
 
             if (!connectSuccess) {
                 Log.i(logConstantClass, "Connection Failed")
-                finish()
             } else {
                 Log.i(logConstantClass, "Connection Success")
                 isDeviceConnected = true
+                connect_to_bottle_loader.visibility = View.GONE
+                connect_to_bottle_label.visibility = View.GONE
             }
         }
     }

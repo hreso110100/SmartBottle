@@ -30,24 +30,23 @@ class RegisterBottleActivity : AppCompatActivity() {
 
             var password = activity_register_bottle_bottlePassword.text
 
-            if(password.length != 0){
-                val bottle = Bottle(bottleId, password.toString())
-                mDatabase!!.child(bottleId).setValue(bottle).addOnCompleteListener(
-                        OnCompleteListener { task ->
-                            when {
-                                task.isSuccessful -> {
-                                    val intent = Intent(this, ConnectToBottleActivity::class.java)
-                                    intent.putExtra("bottle_id", bottleId.toString())
-                                    startActivity(intent)
-                                }
-                                else -> {
-                                    Toast.makeText(this, "Push unsucessfull. Error: " +task.result , Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        })
-            }else{
-                Toast.makeText(this, "Please use longer password.", Toast.LENGTH_SHORT).show()
-            }
+//            if(password.isNotEmpty()){
+//                val bottle = Bottle(bottleId, password.toString())
+//                mDatabase!!.child(bottleId).setValue(bottle).addOnCompleteListener { task ->
+//                    when {
+//                        task.isSuccessful -> {
+//                            val intent = Intent(this, ConnectToBottleActivity::class.java)
+//                            intent.putExtra("bottle_id", bottleId.toString())
+//                            startActivity(intent)
+//                        }
+//                        else -> {
+//                            Toast.makeText(this, "Push unsucessfull. Error: " , Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                }
+//            }else{
+//                Toast.makeText(this, "Please use longer password.", Toast.LENGTH_SHORT).show()
+//            }
         }
     }
 

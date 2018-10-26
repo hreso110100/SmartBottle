@@ -24,9 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".CodeScannerActivity"/>
+        <activity android:name=".CodeScannerActivity"
+        android:screenOrientation="portrait"/>
         <activity android:name=".RegisterBottleActivity"/>
-        <activity android:name=".ConnectToBottleActivity"/>
+        <activity android:name=".ConnectToBottleActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".PersonalDetailsActivity">

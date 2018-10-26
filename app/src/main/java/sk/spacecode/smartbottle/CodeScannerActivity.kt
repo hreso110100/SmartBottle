@@ -27,7 +27,7 @@ class CodeScannerActivity : AppCompatActivity() {
         mCodeScanner!!.setDecodeCallback { result ->
             Log.e("QR_RESULT", result.toString())
 
-            val intent = Intent(this, RegisterBottleActivity::class.java)
+            val intent = Intent(this, ConnectToBottleActivity::class.java)
             intent.putExtra("qr_result", result.toString())
             startActivity(intent)
         }
