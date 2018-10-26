@@ -31,6 +31,7 @@ class RegisterBottleActivity : AppCompatActivity() {
 
             if (password.isNotEmpty()) {
                 val intent = Intent(this, PersonalDetailsActivity::class.java)
+                intent.putExtra("device_mac", bottleId)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Please use longer password.", Toast.LENGTH_SHORT).show()

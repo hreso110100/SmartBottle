@@ -10,12 +10,12 @@ class PersonalDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_details)
-
+        val deviceId = intent.getStringExtra("device_mac")
 
         activity_personal_details_submit.setOnClickListener {
             val intent = Intent(this, MainActivity()::class.java)
+            intent.putExtra("device_mac", deviceId)
             startActivity(intent)
-
         }
     }
 }
