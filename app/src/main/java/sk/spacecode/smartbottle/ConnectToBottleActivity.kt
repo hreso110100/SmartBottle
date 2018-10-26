@@ -18,8 +18,11 @@ import java.util.*
 
 class ConnectToBottleActivity : AppCompatActivity() {
 
+    companion object Socket{
+        var bluetoothSocket: BluetoothSocket? = null
+    }
+
     private val bluetoothRequestCode = 1
-    private var bluetoothSocket: BluetoothSocket? = null
     private val myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
     private var device: BluetoothDevice? = null
     private var isDeviceConnected = false

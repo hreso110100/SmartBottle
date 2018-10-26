@@ -31,7 +31,6 @@ class RegisterBottleActivity : AppCompatActivity() {
             val password = activity_register_bottle_bottlePassword.text
 
             if (password.isNotEmpty()) {
-
                 val bottle = Bottle(bottleId, password.toString().trim())
 
                 mDatabase!!.child(bottleId).setValue(bottle).addOnCompleteListener { task ->
@@ -47,6 +46,7 @@ class RegisterBottleActivity : AppCompatActivity() {
                         }
                     }
                 }
+
 
             } else {
                 Toast.makeText(this, "Please use longer password.", Toast.LENGTH_SHORT).show()

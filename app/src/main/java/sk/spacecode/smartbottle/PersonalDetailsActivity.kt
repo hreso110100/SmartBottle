@@ -8,7 +8,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_personal_details.*
 import org.jetbrains.anko.indeterminateProgressDialog
-import org.jetbrains.anko.progressDialog
 import sk.spacecode.smartbottle.dataClasses.Person
 
 class PersonalDetailsActivity : AppCompatActivity() {
@@ -37,6 +36,7 @@ class PersonalDetailsActivity : AppCompatActivity() {
                         task.isSuccessful -> {
                             val intent = Intent(this, MainActivity()::class.java)
                             startActivity(intent)
+                            intent.putExtra("device_mac", bottleId)
                             dialog.hide()
                         }
                         else -> {
