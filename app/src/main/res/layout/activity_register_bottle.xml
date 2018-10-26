@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterBottleActivity">
+
+    <TextView
+        android:id="@+id/activity_register_bottle_bottleId_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="Your bottle id: "
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"/>
+
+    <TextView
+        android:id="@+id/activity_register_bottle_bottleId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="96dp"/>
+
+
+    <TextView
+        android:id="@+id/activity_register_bottle_passwordTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Password"
+        android:layout_alignBottom="@+id/activity_register_bottle_bottlePassword"
+        android:layout_alignStart="@+id/activity_register_bottle_bottlePassword"
+        android:layout_marginBottom="48dp"/>
+
+    <EditText
+        android:id="@+id/activity_register_bottle_bottlePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter your password"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="144dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"/>
+
+    <Button
+        android:id="@+id/activity_register_bottle_firebase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="64dp" />
+
+</RelativeLayout>
