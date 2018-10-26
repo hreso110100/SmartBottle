@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SmartBottle.iml" filepath="$PROJECT_DIR$/SmartBottle.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/smartbottle.iml" filepath="$PROJECT_DIR$/smartbottle.iml" />
     </modules>
   </component>
 </project>

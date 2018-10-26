@@ -3,6 +3,8 @@ package sk.spacecode.smartbottle
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
@@ -16,13 +18,14 @@ class ConnectToBottleActivity : AppCompatActivity() {
     private val bluetoothRequestCode = 1
     private var bluetoothSocket: BluetoothSocket? = null
     private val myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+    private val deviceMAC = "20:13:10:17:10:29"
     private var isDeviceConnected = false
     private var bluetoothAdapter: BluetoothAdapter? = null
     private val logConstantClass = "ConnectToBottleActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_connect_to_bottle)
 
         // Checking if device has Bluetooth
 
@@ -50,15 +53,19 @@ class ConnectToBottleActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg devices: Void): Void? {
             try {
-                val device = this@ConnectToBottleActivity.bluetoothAdapter?.getRemoteDevice("20:13:10:17:10:29")
+                val device = bluetoothAdapter?.getRemoteDevice(deviceMAC)
                 device?.createBond()
 
-                if (device?.bondState == BluetoothDevice.BOND_BONDED) {
-                    Log.i(logConstantClass, "CONNECTING TO ${device.address}")
-
-                    if (bluetoothSocket == null || !isDeviceConnected) {
-                        bluetoothSocket = device.createInsecureRfcommSocketToServiceRecord(myUUID)
-                        bluetoothSocket!!.connect()
+                val broadcastReceiver = object : BroadcastReceiver() {
+                    override fun onReceive(context: Context?, intent: Intent?) {
+                        if (intent?.action == BluetoothDevice.ACTION_BOND_STATE_CHANGED) {
+                            if (device?.bondState == BluetoothDevice.BOND_BONDED) {
+                                if (bluetoothSocket == null || !isDeviceConnected) {
+                                    bluetoothSocket = device.createInsecureRfcommSocketToServiceRecord(myUUID)
+                                    bluetoothSocket!!.connect()
+                                }
+                            }
+                        }
                     }
                 }
             } catch (e: IOException) {
