@@ -1,14 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".StatisticsFragment">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            tools:context=".StatisticsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Statistics"/>
+    >
 
-</FrameLayout>
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+                android:id="@+id/statistic_main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Statistics"
+                style="@style/Headline3"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="16dp"/>
+
+        <TextView
+                android:id="@+id/statistic_weekly_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly"
+                style="@style/Headline4"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/statistic_main_title"/>
+
+        <android.support.v7.widget.AppCompatImageView
+                app:layout_constraintTop_toBottomOf="@id/statistic_weekly_title"
+                android:id="@+id/statistic_chart_first"
+                android:layout_width="wrap_content"
+                android:layout_height="220dp"
+                android:padding="8dp"
+                android:src="@drawable/chart"
+        />
+        <TextView
+                android:id="@+id/statistic_monthly_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monthly"
+                style="@style/Headline4"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/statistic_chart_first"/>
+        <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/statistic_chart_second"
+                android:layout_width="wrap_content"
+                android:layout_height="220dp"
+                android:padding="8dp"
+                android:src="@drawable/chart"
+                app:layout_constraintTop_toBottomOf="@id/statistic_monthly_title"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>
