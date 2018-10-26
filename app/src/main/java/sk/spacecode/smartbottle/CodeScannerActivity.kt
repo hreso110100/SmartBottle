@@ -2,6 +2,7 @@
 package sk.spacecode.smartbottle
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -26,10 +27,9 @@ class CodeScannerActivity : AppCompatActivity() {
         mCodeScanner!!.setDecodeCallback { result ->
             Log.e("QR_RESULT", result.toString())
 
-            //TODO[kubo]: uncommemnt and add activity which connect to whatever
-//            val intent = Intent(this, MainActivity::class.java)
-//            intent.putExtra("qr_result", result.toString())
-//            startActivity(intent)
+            val intent = Intent(this, RegisterBottleActivity::class.java)
+            intent.putExtra("qr_result", result.toString())
+            startActivity(intent)
         }
 
         mCodeScanner!!.setErrorCallback { runOnUiThread { Toast.makeText(this, "SCANNER ERROR", Toast.LENGTH_LONG).show() } }
