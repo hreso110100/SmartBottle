@@ -10,13 +10,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import sk.spacecode.smartbottle.dataClasses.DataTransfer
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var deviceId: String
-
     companion object {
         var lastAmountDrinked = 0
+        var currentDate = ""
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(DashboardFragment())
-        deviceId = intent.getStringExtra("device_mac")
         ReadData().execute()
     }
 
@@ -39,6 +40,8 @@ class MainActivity : AppCompatActivity() {
                 val actualAmountOfWater = gson.fromJson(line, DataTransfer::class.java)
                 if (actualAmountOfWater.objem.toInt() != 0) {
                     lastAmountDrinked = actualAmountOfWater.objem.toInt()
+                    val sdf = SimpleDateFormat("dd/M hh:mm:ss", Locale.GERMAN)
+                    currentDate = sdf.format(Date())
                 }
                 line = bufferReader.readLine()
             }
