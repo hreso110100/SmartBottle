@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import sk.spacecode.smartbottle.dataClasses.DataTransfer
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -14,14 +15,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var deviceId: String
 
+    companion object {
+        var lastAmountDrinked = 0
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        loadFragment(DashboardFragment.newInstance())
+        loadFragment(DashboardFragment())
         deviceId = intent.getStringExtra("device_mac")
         ReadData().execute()
-
     }
 
     inner class ReadData : AsyncTask<Void, Void, Void>() {
@@ -30,8 +34,12 @@ class MainActivity : AppCompatActivity() {
             val bufferReader = BufferedReader(InputStreamReader(ConnectToBottleActivity.bluetoothSocket?.inputStream))
 
             var line = bufferReader.readLine()
+            val gson = Gson()
             while (line != null) {
-                Log.i("MAINDATA", line)
+                val actualAmountOfWater = gson.fromJson(line, DataTransfer::class.java)
+                if (actualAmountOfWater.objem.toInt() != 0) {
+                    lastAmountDrinked = actualAmountOfWater.objem.toInt()
+                }
                 line = bufferReader.readLine()
             }
             return null
@@ -42,15 +50,15 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.navigation_home -> {
-                loadFragment(DashboardFragment.newInstance())
+                loadFragment(DashboardFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_workout -> {
-                loadFragment(StatisticsFragment.newInstance())
+                loadFragment(StatisticsFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {
-                loadFragment(ProfileFragment.newInstance())
+                loadFragment(ProfileFragment())
                 return@OnNavigationItemSelectedListener true
             }
         }
