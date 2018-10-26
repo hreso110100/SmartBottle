@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              tools:context=".ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Profile"/>
+            android:id="@+id/profile_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            style="@style/Headline3"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="16dp"/>
 
-</FrameLayout>
+    <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_email_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_main_title">
+
+        <EditText
+                android:id="@+id/profile_email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="email@email.com"
+                android:hint="Email" />
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_name_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_email_text_input">
+
+        <EditText
+                android:id="@+id/profile_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jozeph Carrot"
+                android:hint="Name" />
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_weight_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_name_text_input">
+
+        <EditText
+                android:id="@+id/profile_weight_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="86 kg"
+                android:hint="Weight" />
+
+    </android.support.design.widget.TextInputLayout>
+</android.support.constraint.ConstraintLayout>
