@@ -74,11 +74,15 @@ class ConnectToBottleActivity : AppCompatActivity() {
 
             if (!connectSuccess) {
                 Log.i(logConstantClass, "Connection Failed")
+                ConnectToArduino().execute()
             } else {
                 Log.i(logConstantClass, "Connection Success")
                 isDeviceConnected = true
                 connect_to_bottle_loader.visibility = View.GONE
                 connect_to_bottle_label.visibility = View.GONE
+                val intent = Intent(this@ConnectToBottleActivity, RegisterBottleActivity()::class.java)
+                intent.putExtra("device_mac", device?.address)
+                startActivity(intent)
             }
         }
     }

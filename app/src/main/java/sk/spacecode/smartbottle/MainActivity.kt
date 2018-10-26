@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    private fun loadFragment(fragment: Fragment) = supportFragmentManager.beginTransaction().replace(R.id.dashboard_fragment_container, fragment).commit()
+    private fun loadFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().replace(R.id.dashboard_fragment_container, fragment).commit()
 
 
 }
