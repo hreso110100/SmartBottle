@@ -1,13 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              tools:context=".DashboardFragment">
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="dashboard"/>
+            android:id="@+id/dashboard_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dashboard"
+            style="@style/Headline3"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="40dp"/>
 
-</FrameLayout>
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/dashboard_circular_progress"
+            android:layout_width="225dp"
+            android:layout_height="225dp"
+            android:alpha="0.8"
+            android:translationZ="8dp"
+            app:cpb_progress="75"
+            app:cpb_background_progressbar_color="@android:color/darker_gray"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_progressbar_color="@android:color/holo_red_dark"
+            app:cpb_progressbar_width="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_main_title"
+            app:layout_constraintVertical_bias="0.152" />
+
+    <TextView
+            android:id="@+id/dashboard_progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="1 400 \n / \n 3 000"
+            style="@style/Headline4"
+            app:layout_constraintTop_toTopOf="@+id/dashboard_circular_progress"
+            app:layout_constraintRight_toRightOf="@+id/dashboard_circular_progress"
+            app:layout_constraintLeft_toLeftOf="@+id/dashboard_circular_progress"
+            app:layout_constraintBottom_toBottomOf="@+id/dashboard_circular_progress"
+            android:padding="16dp"/>
+
+    <TextView
+            android:id="@+id/dashboard_today_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="26.08.2018"
+            style="@style/Headline4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_circular_progress"
+            android:padding="16dp"/>
+    <TextView
+            android:id="@+id/dashboard_last_drink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last drink"
+            style="@style/Headline6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_today_date"
+            android:padding="16dp"/>
+    <TextView
+            android:id="@+id/dashboard_last_time_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="365ml at 14:56"
+            style="@style/Headline5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_last_drink"
+            />
+
+
+
+</android.support.constraint.ConstraintLayout>
