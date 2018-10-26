@@ -36,7 +36,8 @@ class RegisterBottleActivity : AppCompatActivity() {
                         OnCompleteListener { task ->
                             when {
                                 task.isSuccessful -> {
-                                    val intent = Intent(this, MainActivity::class.java)
+                                    val intent = Intent(this, ConnectToBottleActivity::class.java)
+                                    intent.putExtra("bottle_id", bottleId.toString())
                                     startActivity(intent)
                                 }
                                 else -> {
