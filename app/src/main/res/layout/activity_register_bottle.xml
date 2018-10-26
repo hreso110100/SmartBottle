@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RegisterBottleActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_gradient"
+                tools:context=".RegisterBottleActivity">
 
     <TextView
         android:id="@+id/activity_register_bottle_bottleId_tittle"
@@ -13,6 +14,7 @@
         android:text="Your bottle id: "
         android:textStyle="bold"
         android:textSize="20sp"
+        android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="64dp"/>
 
@@ -21,39 +23,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:textColor="#FFFFFF"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="96dp"/>
 
 
-    <TextView
-        android:id="@+id/activity_register_bottle_passwordTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="Password"
-        android:layout_alignBottom="@+id/activity_register_bottle_bottlePassword"
-        android:layout_alignStart="@+id/activity_register_bottle_bottlePassword"
-        android:layout_marginBottom="48dp"/>
+    <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/activity_register_bottle_qrImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@+id/activity_register_bottle_bottleId"
+            android:layout_marginTop="64dp"/>
+
 
     <EditText
-        android:id="@+id/activity_register_bottle_bottlePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:hint="Enter your password"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="144dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"/>
+            android:id="@+id/activity_register_bottle_bottlePassword"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="144dp"
+            android:background="@drawable/rounded_input"
+            android:hint="Enter your password"
+            android:textSize="16dp"
+            android:paddingLeft="12dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#b3b3b3"
+            tools:ignore="TextFields" />
+
 
     <Button
-        android:id="@+id/activity_register_bottle_firebase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="64dp" />
+            android:id="@+id/activity_register_bottle_firebase"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_background"
+            android:elevation="0dp"
+            android:text="Register"
+            android:stateListAnimator="@null"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="64dp" />
 
 </RelativeLayout>

@@ -1,15 +1,14 @@
 package sk.spacecode.smartbottle
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register_bottle.*
 import sk.spacecode.smartbottle.dataClasses.Bottle
+
 
 class RegisterBottleActivity : AppCompatActivity() {
 
@@ -26,32 +25,37 @@ class RegisterBottleActivity : AppCompatActivity() {
         mMessageReference = FirebaseDatabase.getInstance().getReference("message")
         activity_register_bottle_bottleId.text = bottleId
 
+
+        //generating QR code
+//        val myBitmap = QRCode.from(bottleId.toString()).bitmap()
+//        activity_register_bottle_qrImage.setImageBitmap(myBitmap)
+
+
         activity_register_bottle_firebase.setOnClickListener {
 
             var password = activity_register_bottle_bottlePassword.text
 
-            if(password.length != 0){
+            if(password.isNotEmpty()){
                 val bottle = Bottle(bottleId, password.toString())
-                mDatabase!!.child(bottleId).setValue(bottle).addOnCompleteListener(
-                        OnCompleteListener { task ->
-                            when {
-                                task.isSuccessful -> {
-                                    val intent = Intent(this, ConnectToBottleActivity::class.java)
-                                    intent.putExtra("bottle_id", bottleId.toString())
-                                    startActivity(intent)
-                                }
-                                else -> {
-                                    Toast.makeText(this, "Push unsucessfull. Error: " +task.result , Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        })
+                val intent = Intent(this, ConnectToBottleActivity::class.java)
+                intent.putExtra("bottle_id", bottleId.toString())
+                startActivity(intent)
+
+//                mDatabase!!.child(bottleId).setValue(bottle).addOnCompleteListener(
+//                        OnCompleteListener { task ->
+//                            when {
+//                                task.isSuccessful -> {
+//
+//                                }
+//                                else -> {
+//                                    Toast.makeText(this, "Push unsucessfull." , Toast.LENGTH_SHORT).show()
+//                                }
+//                            }
+//                        })
             }else{
                 Toast.makeText(this, "Please use longer password.", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
-
-
 
 }
