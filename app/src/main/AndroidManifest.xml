@@ -31,7 +31,8 @@
                   android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ConnectToBottleActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait">
         </activity>
         <activity android:name=".PersonalDetailsActivity">
         </activity>
