@@ -19,7 +19,7 @@ class RegisterBottleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_bottle)
 
-        val bottleId = intent.getStringExtra("qr_result")
+        val bottleId = intent.getStringExtra("device_mac")
 
         mDatabase = FirebaseDatabase.getInstance().reference
         mMessageReference = FirebaseDatabase.getInstance().getReference("message")
@@ -27,14 +27,11 @@ class RegisterBottleActivity : AppCompatActivity() {
 
         activity_register_bottle_firebase.setOnClickListener {
 
-            var password = activity_register_bottle_bottlePassword.text
+            val password = activity_register_bottle_bottlePassword.text
 
             if (password.isNotEmpty()) {
-                val bottle = Bottle(bottleId, password.toString())
-                val intent = Intent(this, ConnectToBottleActivity::class.java)
-                intent.putExtra("bottle_id", bottleId.toString())
+                val intent = Intent(this, PersonalDetailsActivity::class.java)
                 startActivity(intent)
-
             } else {
                 Toast.makeText(this, "Please use longer password.", Toast.LENGTH_SHORT).show()
             }
