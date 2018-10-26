@@ -1,4 +1,3 @@
-
 package sk.spacecode.smartbottle
 
 import android.Manifest
@@ -25,14 +24,16 @@ class CodeScannerActivity : AppCompatActivity() {
 
         mCodeScanner = CodeScanner(this, findViewById(R.id.scanner))
         mCodeScanner!!.setDecodeCallback { result ->
-            Log.e("QR_RESULT", result.toString())
-
             val intent = Intent(this, RegisterBottleActivity::class.java)
             intent.putExtra("qr_result", result.toString().trim())
             startActivity(intent)
         }
 
-        mCodeScanner!!.setErrorCallback { runOnUiThread { Toast.makeText(this, "SCANNER ERROR", Toast.LENGTH_LONG).show() } }
+        mCodeScanner!!.setErrorCallback {
+            runOnUiThread {
+                Toast.makeText(this, "SCANNER ERROR", Toast.LENGTH_LONG).show()
+            }
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
@@ -47,8 +48,10 @@ class CodeScannerActivity : AppCompatActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>,
-                                            @NonNull grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, @NonNull permissions: Array<String>,
+        @NonNull grantResults: IntArray
+    ) {
         if (requestCode == RC_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mPermissionGranted = true
