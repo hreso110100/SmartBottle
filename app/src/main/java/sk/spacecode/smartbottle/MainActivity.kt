@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var lastAmountDrinked = 0
+        var drinkedFromFirebase = ""
+        var currentDate = ""
+        var userWeight = ""
+        var userName = ""
         var lastTimeDrinked = "-"
         var lastTemperature = "0"
     }
@@ -40,9 +45,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(DashboardFragment())
         deviceId = intent.getStringExtra("device_mac")
+        if(deviceId == null){
+            deviceId = "20:13:10:17:10:29"
+        }
+
+        getUserNameFromDatabase()
+        getWeightFromDatabase()
+
         ReadData().execute()
 
         val handler = Handler()
@@ -150,32 +163,58 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    fun addToFirebaseDrinked(value: Int){
-        val mDatabase: DatabaseReference?
+    fun addToFirebaseDrinkedValue(value: Int){
+        var mDatabase: DatabaseReference?
         mDatabase = FirebaseDatabase.getInstance().reference
-        val rootRef = mDatabase.child("20:13:10:17:10:29").child("drinkedWather")
+        val rootRef = mDatabase!!.child(deviceId).child("drinkedWather")
 
         rootRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Log.e("", "--------------------")
-                Log.e("", p0!!.message)
-//                Toast.makeText(this@MainActivity, p0!!.message, Toast.LENGTH_SHORT).show();
-            }
+            override fun onCancelled(p0: DatabaseError) {}
 
             override fun onDataChange(p0: DataSnapshot) {
-                Log.e("", "--------------------")
-                Log.e("", p0.toString())
-                WelcomeActivity.data = p0.value.toString()
-//                Toast.makeText(this@MainActivity, p0.value.toString(), Toast.LENGTH_SHORT).show()
+                MainActivity.drinkedFromFirebase = p0.value.toString()
+                Toast.makeText(this@MainActivity, MainActivity.drinkedFromFirebase, Toast.LENGTH_SHORT).show()
 
                 var mDatabase: DatabaseReference?
                 mDatabase = FirebaseDatabase.getInstance().reference
-                val rootRef = mDatabase!!.child("20:13:10:17:10:29").child("drinkedWather")
+                val rootRef = mDatabase!!.child(deviceId).child("drinkedWather")
 
-                rootRef.setValue( (WelcomeActivity.data.toInt() + value).toString())
+                rootRef.setValue( (MainActivity.drinkedFromFirebase.toInt() + value).toString())
             }
         })
+    }
 
+
+    fun getWeightFromDatabase(){
+        var mDatabase: DatabaseReference?
+        mDatabase = FirebaseDatabase.getInstance().reference
+        val rootRef = mDatabase!!.child(deviceId).child("personalData").child("weight")
+
+        rootRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                MainActivity.userWeight = p0.value.toString()
+                Toast.makeText(this@MainActivity, MainActivity.userWeight, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
+    fun getUserNameFromDatabase(){
+        var mDatabase: DatabaseReference?
+        mDatabase = FirebaseDatabase.getInstance().reference
+        val rootRef = mDatabase!!.child(deviceId).child("personalData").child("name")
+
+        rootRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                MainActivity.userName = p0.value.toString()
+                Toast.makeText(this@MainActivity, MainActivity.userName, Toast.LENGTH_SHORT).show()
+
+            }
+        })
     }
 
 }

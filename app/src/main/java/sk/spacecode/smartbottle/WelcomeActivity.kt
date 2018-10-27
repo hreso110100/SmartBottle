@@ -14,11 +14,6 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 
 class WelcomeActivity : AppCompatActivity() {
 
-
-    companion object {
-        var data = ""
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         transparentToolbar()
