@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_personal_details.*
 import kotlinx.android.synthetic.main.activity_register_bottle.*
 import org.jetbrains.anko.indeterminateProgressDialog
+import sk.spacecode.smartbottle.R.id.activity_personal_details_name
 import sk.spacecode.smartbottle.dataClasses.Person
 
 class PersonalDetailsActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class PersonalDetailsActivity : AppCompatActivity() {
         activity_personal_details_submit.setOnClickListener {
             val name = activity_personal_details_name.text
             val weight = activity_personal_details_weight.text
+
 
             if (name.isNotEmpty() && weight.isNotEmpty()) {
                 val personData = Person(name.toString(), weight.toString())

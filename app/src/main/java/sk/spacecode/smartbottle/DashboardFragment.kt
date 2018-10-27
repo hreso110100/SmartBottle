@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 class DashboardFragment : Fragment() {
 
     private lateinit var rootView: View
-    private var moveLoadCoeficient = 3000 / 100
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,17 +22,24 @@ class DashboardFragment : Fragment() {
         val mTicker = object : Runnable {
             override fun run() {
 
+                rootView.dashboard_progress_text.text =
+                        "${MainActivity.drinkedFromFirebase} ml / \n ${MainActivity.recommendedAmount} ml"
 
-                if (MainActivity.lastAmountDrinked.toFloat() == rootView.dashboard_circular_progress.progress * moveLoadCoeficient) {
-                    rootView.dashboard_circular_progress.progress += 1F
+                if (MainActivity.recommendedAmount.toFloat() <= 0) {
+                    rootView.dashboard_circular_progress.progress = 0.00F
+                } else {
+
+                    rootView.dashboard_circular_progress.progress =
+                            ((100 / MainActivity.recommendedAmount.toFloat()) * MainActivity.drinkedFromFirebase.toFloat())
+
                 }
-
                 if (rootView.dashboard_circular_progress.progress == 100F) {
                     rootView.dashboard_progress_text.visibility = View.GONE
                     rootView.dashboard_progress_text_done.visibility = View.VISIBLE
                 }
                 rootView.dashboard_last_amount_value.text = MainActivity.lastAmountDrinked.toString() + " ml"
                 rootView.dashboard_last_time_value.text = MainActivity.lastTimeDrinked
+                rootView.dashboard_last_temperature_value.text = MainActivity.lastTemperature + " °C"
                 handler.postDelayed(this, 100)
             }
         }
