@@ -5,21 +5,22 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import com.google.firebase.FirebaseError
-import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import sk.spacecode.smartbottle.dataClasses.DataTransfer
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var deviceId: String
-
     companion object {
         var lastAmountDrinked = 0
+        var currentDate = ""
     }
+
+    private var deviceId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
                 val actualAmountOfWater = gson.fromJson(line, DataTransfer::class.java)
                 if (actualAmountOfWater.objem.toInt() != 0) {
                     lastAmountDrinked = actualAmountOfWater.objem.toInt()
+                    val sdf = SimpleDateFormat("dd/M hh:mm:ss", Locale.GERMAN)
+                    currentDate = sdf.format(Date())
                 }
                 line = bufferReader.readLine()
             }

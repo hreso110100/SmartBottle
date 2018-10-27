@@ -7,67 +7,137 @@
         android:layout_height="match_parent"
         tools:context=".DashboardFragment">
 
-    <TextView
-            android:id="@+id/dashboard_main_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            style="@style/Headline3"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="40dp"/>
+    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                 android:id="@+id/dashboard_inner_layout"
+                                                 app:layout_constraintTop_toTopOf="parent"
+                                                 app:layout_constraintEnd_toEndOf="parent"
+                                                 app:layout_constraintStart_toStartOf="parent"
+                                                 android:background="@drawable/bg_gradient"
+                                                 android:layout_height="wrap_content">
 
-    <com.mikhaellopez.circularprogressbar.CircularProgressBar
-            android:id="@+id/dashboard_circular_progress"
-            android:layout_width="225dp"
-            android:layout_height="225dp"
-            android:alpha="0.8"
-            android:translationZ="8dp"
-            app:cpb_progress="75"
-            app:cpb_background_progressbar_color="@android:color/darker_gray"
-            app:cpb_background_progressbar_width="5dp"
-            app:cpb_progressbar_color="@android:color/holo_red_dark"
-            app:cpb_progressbar_width="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dashboard_main_title"
-            app:layout_constraintVertical_bias="0.152"/>
+        <TextView
+                android:id="@+id/dashboard_main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Currently drunk"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:padding="16dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-            android:id="@+id/dashboard_progress_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="1 400 \n / \n 3 000"
-            style="@style/Headline4"
-            app:layout_constraintTop_toTopOf="@+id/dashboard_circular_progress"
-            app:layout_constraintRight_toRightOf="@+id/dashboard_circular_progress"
-            app:layout_constraintLeft_toLeftOf="@+id/dashboard_circular_progress"
-            app:layout_constraintBottom_toBottomOf="@+id/dashboard_circular_progress"
-            android:padding="16dp"/>
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/dashboard_circular_progress"
+                android:layout_width="225dp"
+                android:layout_height="225dp"
+                android:translationZ="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                app:cpb_progress="50"
+                app:cpb_background_progressbar_color="@android:color/darker_gray"
+                app:cpb_background_progressbar_width="12dp"
+                app:cpb_progressbar_color="@android:color/white"
+                app:cpb_progressbar_width="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dashboard_main_title"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+                android:id="@+id/dashboard_progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="1 400 ml\n / \n3 000 ml"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toTopOf="@+id/dashboard_circular_progress"
+                app:layout_constraintRight_toRightOf="@+id/dashboard_circular_progress"
+                app:layout_constraintLeft_toLeftOf="@+id/dashboard_circular_progress"
+                app:layout_constraintBottom_toBottomOf="@+id/dashboard_circular_progress"
+                android:padding="16dp"/>
+
+
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
             android:id="@+id/dashboard_last_drink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lastly drunk"
-            style="@style/Headline6"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dashboard_circular_progress"
-            android:padding="16dp"/>
-    <TextView
-            android:id="@+id/dashboard_last_time_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 ml"
-            style="@style/Headline5"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_inner_layout"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <android.support.constraint.ConstraintLayout
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dashboard_last_drink"
-    />
+            android:id="@+id/dashboard_inner_layout_2"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:background="@drawable/rectangle_transient"
+            android:layout_height="wrap_content">
+
+        <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                              android:id="@+id/guideline" app:layout_constraintGuide_percent="0.5"
+                                              android:orientation="vertical"/>
+
+
+        <TextView
+                android:id="@+id/dashboard_amount_label"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="21sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                android:text="Amount"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+
+        <TextView
+                android:id="@+id/dashboard_last_amount_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 ml"
+                android:textSize="21sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dashboard_amount_label"
+        />
+
+        <TextView
+                android:id="@+id/dashboard_time_label"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="21sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                android:text="Time"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+
+        <TextView
+                android:id="@+id/dashboard_last_time_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textSize="21sp"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dashboard_amount_label"
+        />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

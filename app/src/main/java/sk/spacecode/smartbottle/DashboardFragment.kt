@@ -22,8 +22,8 @@ class DashboardFragment : Fragment() {
         val handler = Handler()
         val mTicker = object : Runnable {
             override fun run() {
-                rootView.dashboard_last_time_value.text = MainActivity.lastAmountDrinked.toString() + " ml"
-                Log.i("DATA", MainActivity.lastAmountDrinked.toString())
+                rootView.dashboard_last_amount_value.text = MainActivity.lastAmountDrinked.toString() + " ml"
+                rootView.dashboard_last_time_value.text = MainActivity.currentDate
                 handler.postDelayed(this, 100)
             }
         }
