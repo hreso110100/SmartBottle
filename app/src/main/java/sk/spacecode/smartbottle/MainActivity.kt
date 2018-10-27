@@ -14,7 +14,6 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +22,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
-
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,10 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var lastAmountDrinked = 0
-        var drinkedFromFirebase = ""
-        var currentDate = ""
+        var drinkedFromFirebase = "0"
         var userWeight = ""
         var userName = ""
+        var recommendedAmount = 0
         var lastTimeDrinked = "-"
         var lastTemperature = "0"
     }
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(DashboardFragment())
         deviceId = intent.getStringExtra("device_mac")
-        if(deviceId == null){
+        if (deviceId == null) {
             deviceId = "20:13:10:17:10:29"
         }
 
@@ -61,9 +60,6 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler()
         val mTicker = object : Runnable {
             override fun run() {
-
-                Log.i("COUNTER", counter.toString())
-                Log.i("WARNING", warningLevel.toString())
                 counter++
 
                 if (counter == 10) {
@@ -124,11 +120,22 @@ class MainActivity : AppCompatActivity() {
                 lastTemperature = actualAmountOfWater.teplota
 
                 if (actualAmountOfWater.objem.toInt() != 0) {
+
+                    Log.i("HODNOTA", actualAmountOfWater.objem.toInt().toString())
+
+                    val differenceValue = actualAmountOfWater.objem.toInt() - lastAmountDrinked
+
+                    if (differenceValue > 0) {
+                        addToFirebaseDrinkedValue(differenceValue)
+                    }else {
+                        addToFirebaseDrinkedValue(actualAmountOfWater.objem.toInt())
+                    }
                     lastAmountDrinked = actualAmountOfWater.objem.toInt()
                     val sdf = SimpleDateFormat("dd/M hh:mm:ss", Locale.GERMAN)
                     lastTimeDrinked = sdf.format(Date())
                     counter = 0
                     warningLevel = 1
+
                     ConnectToBottleActivity.bluetoothSocket?.outputStream?.write(warningLevel.toString().toByteArray())
                 }
                 line = bufferReader.readLine()
@@ -161,9 +168,8 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.dashboard_fragment_container, fragment).commit()
 
 
-
-
-    fun addToFirebaseDrinkedValue(value: Int){
+    fun addToFirebaseDrinkedValue(value: Int) {
+        if (value == 0) return
         var mDatabase: DatabaseReference?
         mDatabase = FirebaseDatabase.getInstance().reference
         val rootRef = mDatabase!!.child(deviceId).child("drinkedWather")
@@ -173,19 +179,18 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 MainActivity.drinkedFromFirebase = p0.value.toString()
-                Toast.makeText(this@MainActivity, MainActivity.drinkedFromFirebase, Toast.LENGTH_SHORT).show()
 
                 var mDatabase: DatabaseReference?
                 mDatabase = FirebaseDatabase.getInstance().reference
                 val rootRef = mDatabase!!.child(deviceId).child("drinkedWather")
 
-                rootRef.setValue( (MainActivity.drinkedFromFirebase.toInt() + value).toString())
+                rootRef.setValue((MainActivity.drinkedFromFirebase.toInt() + value).toString())
             }
         })
     }
 
 
-    fun getWeightFromDatabase(){
+    fun getWeightFromDatabase() {
         var mDatabase: DatabaseReference?
         mDatabase = FirebaseDatabase.getInstance().reference
         val rootRef = mDatabase!!.child(deviceId).child("personalData").child("weight")
@@ -195,13 +200,13 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 MainActivity.userWeight = p0.value.toString()
-                Toast.makeText(this@MainActivity, MainActivity.userWeight, Toast.LENGTH_SHORT).show()
+                MainActivity.recommendedAmount = ((MainActivity.userWeight.toDouble() * 0.035) * 1000).roundToInt()
             }
         })
     }
 
 
-    fun getUserNameFromDatabase(){
+    fun getUserNameFromDatabase() {
         var mDatabase: DatabaseReference?
         mDatabase = FirebaseDatabase.getInstance().reference
         val rootRef = mDatabase!!.child(deviceId).child("personalData").child("name")
@@ -211,8 +216,6 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 MainActivity.userName = p0.value.toString()
-                Toast.makeText(this@MainActivity, MainActivity.userName, Toast.LENGTH_SHORT).show()
-
             }
         })
     }
