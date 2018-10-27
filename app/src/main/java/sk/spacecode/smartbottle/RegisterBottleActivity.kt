@@ -31,6 +31,7 @@ class RegisterBottleActivity : AppCompatActivity() {
             if (password.isNotEmpty()) {
                 val bottle = Bottle(bottleId, password.toString().trim())
 
+                //todo: add default value to
                 mDatabase!!.child(bottleId).child("drinkedWather").setValue(0)
 
                 mDatabase!!.child(bottleId).child("login").setValue(bottle).addOnCompleteListener { task ->
