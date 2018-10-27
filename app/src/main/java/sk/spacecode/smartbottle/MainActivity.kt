@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.google.firebase.FirebaseError
+import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import sk.spacecode.smartbottle.dataClasses.DataTransfer
@@ -25,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(DashboardFragment())
         deviceId = intent.getStringExtra("device_mac")
+        if(deviceId == null){
+            deviceId = "20:13:10:17:10:29"
+        }
         ReadData().execute()
     }
 

@@ -35,8 +35,8 @@ class PersonalDetailsActivity : AppCompatActivity() {
                     when {
                         task.isSuccessful -> {
                             val intent = Intent(this, MainActivity()::class.java)
-                            startActivity(intent)
                             intent.putExtra("device_mac", bottleId)
+                            startActivity(intent)
                             dialog.hide()
                         }
                         else -> {
