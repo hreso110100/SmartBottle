@@ -32,7 +32,7 @@ class RegisterBottleActivity : AppCompatActivity() {
                 val bottle = Bottle(bottleId, password.toString().trim())
 
                 //todo: add default value to
-                mDatabase!!.child(bottleId).child("drinkedWather").setValue(0)
+                mDatabase!!.child(bottleId).child("drinkedWather").setValue(120)
 
                 mDatabase!!.child(bottleId).child("login").setValue(bottle).addOnCompleteListener { task ->
                     when {

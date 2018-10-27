@@ -25,6 +25,8 @@ class ProfileFragment : Fragment() {
         viewEmail.maxLines = 1
         viewWeight.maxLines = 1
 
+        viewEmail.setText("spacecode@gmail.com")
+
         getWeightFromDatabase(viewName)
         getUserNameFromDatabase(viewWeight)
 

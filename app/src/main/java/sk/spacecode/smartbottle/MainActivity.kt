@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var lastAmountDrinked = 0
-        var drinkedFromFirebase = "0"
+        var drinkedFromFirebase = "120"
         var userWeight = ""
         var userName = ""
         var recommendedAmount = 0
@@ -62,7 +62,9 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 counter++
 
-                if (counter == 10) {
+                Log.i("WARNING_LEVEL", warningLevel.toString())
+
+                if (counter == 15) {
                     if (warningLevel < 3) {
                         warningLevel++
                     }
@@ -125,7 +127,7 @@ class MainActivity : AppCompatActivity() {
 
                     val differenceValue = actualAmountOfWater.objem.toInt() - lastAmountDrinked
 
-                    if (differenceValue > 0) {
+                    if (differenceValue >= 0) {
                         addToFirebaseDrinkedValue(differenceValue)
                     }else {
                         addToFirebaseDrinkedValue(actualAmountOfWater.objem.toInt())
