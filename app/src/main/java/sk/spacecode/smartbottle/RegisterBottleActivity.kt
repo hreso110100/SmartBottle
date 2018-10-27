@@ -3,10 +3,10 @@ package sk.spacecode.smartbottle
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_register_bottle.*
 import sk.spacecode.smartbottle.dataClasses.Bottle
 
@@ -21,6 +21,8 @@ class RegisterBottleActivity : AppCompatActivity() {
         activity_register_bottle_bottleId.maxLines = 1
 
 
+
+
         val bottleId = intent.getStringExtra("device_mac")
 
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -32,6 +34,8 @@ class RegisterBottleActivity : AppCompatActivity() {
 
             if (password.isNotEmpty()) {
                 val bottle = Bottle(bottleId, password.toString().trim())
+
+                mDatabase!!.child(bottleId).child("drinkedWather").setValue(0)
 
                 mDatabase!!.child(bottleId).child("login").setValue(bottle).addOnCompleteListener { task ->
                     when {
@@ -52,6 +56,11 @@ class RegisterBottleActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please use longer password.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+    private fun addDrinkedWather() {
+
     }
 
 }

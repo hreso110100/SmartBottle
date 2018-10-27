@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import sk.spacecode.smartbottle.dataClasses.DataTransfer
@@ -33,11 +34,14 @@ class MainActivity : AppCompatActivity() {
         var lastTimeDrinked = "-"
     }
 
+    private var deviceId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(DashboardFragment())
+        deviceId = intent.getStringExtra("device_mac")
         ReadData().execute()
 
         val handler = Handler()
@@ -137,5 +141,35 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().replace(R.id.dashboard_fragment_container, fragment).commit()
 
+
+
+
+    fun addToFirebaseDrinked(value: Int){
+        val mDatabase: DatabaseReference?
+        mDatabase = FirebaseDatabase.getInstance().reference
+        val rootRef = mDatabase.child("20:13:10:17:10:29").child("drinkedWather")
+
+        rootRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.e("", "--------------------")
+                Log.e("", p0!!.message)
+//                Toast.makeText(this@MainActivity, p0!!.message, Toast.LENGTH_SHORT).show();
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.e("", "--------------------")
+                Log.e("", p0.toString())
+                WelcomeActivity.data = p0.value.toString()
+//                Toast.makeText(this@MainActivity, p0.value.toString(), Toast.LENGTH_SHORT).show()
+
+                var mDatabase: DatabaseReference?
+                mDatabase = FirebaseDatabase.getInstance().reference
+                val rootRef = mDatabase!!.child("20:13:10:17:10:29").child("drinkedWather")
+
+                rootRef.setValue( (WelcomeActivity.data.toInt() + value).toString())
+            }
+        })
+
+    }
 
 }
