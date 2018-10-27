@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var lastAmountDrinked = 0
         var lastTimeDrinked = "-"
+        var lastTemperature = "0"
     }
 
     private var deviceId = ""
@@ -47,13 +48,16 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler()
         val mTicker = object : Runnable {
             override fun run() {
+
+                Log.i("COUNTER", counter.toString())
+                Log.i("WARNING", warningLevel.toString())
                 counter++
 
                 if (counter == 10) {
-                    ConnectToBottleActivity.bluetoothSocket?.outputStream?.write(warningLevel.toString().toByteArray())
                     if (warningLevel < 3) {
                         warningLevel++
                     }
+                    ConnectToBottleActivity.bluetoothSocket?.outputStream?.write(warningLevel.toString().toByteArray())
                     showNotification()
                     counter = 0
                 }
@@ -68,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     fun showNotification() {
         val mBuilder = NotificationCompat.Builder(this, 1.toString())
             .setSmallIcon(R.drawable.ic_warning_black_24dp)
-            .setContentTitle("Take a shot of water")
+            .setContentTitle("Surprise your liver, drink water")
             .setContentText("Drinking water in regular period makes you healthier.")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
@@ -104,6 +108,7 @@ class MainActivity : AppCompatActivity() {
             val gson = Gson()
             while (line != null) {
                 val actualAmountOfWater = gson.fromJson(line, DataTransfer::class.java)
+                lastTemperature = actualAmountOfWater.teplota
 
                 if (actualAmountOfWater.objem.toInt() != 0) {
                     lastAmountDrinked = actualAmountOfWater.objem.toInt()
@@ -111,6 +116,7 @@ class MainActivity : AppCompatActivity() {
                     lastTimeDrinked = sdf.format(Date())
                     counter = 0
                     warningLevel = 1
+                    ConnectToBottleActivity.bluetoothSocket?.outputStream?.write(warningLevel.toString().toByteArray())
                 }
                 line = bufferReader.readLine()
             }

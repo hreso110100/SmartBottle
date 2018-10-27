@@ -22,8 +22,8 @@ class PersonalDetailsActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
 
         activity_personal_details_submit.setOnClickListener {
-            val name = activity_register_bottle_bottlePassword.text
-            val weight = activity_personal_details_name.text
+            val name = activity_personal_details_name_input.text
+            val weight = activity_personal_details_weight_input.text
 
             if (name.isNotEmpty() && weight.isNotEmpty()) {
                 val personData = Person(name.toString(), weight.toString())

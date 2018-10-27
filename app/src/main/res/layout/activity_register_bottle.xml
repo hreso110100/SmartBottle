@@ -33,7 +33,7 @@
             android:layout_marginTop="96dp"/>
 
     <EditText
-            android:id="@+id/activity_register_bottle_bottlePassword"
+            android:id="@+id/activity_personal_details_name_input"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
@@ -42,7 +42,10 @@
             android:hint="Enter your password"
             android:maxLines="1"
             android:textSize="16sp"
-            android:padding="16dp"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="21dp"
             android:layout_margin="16dp"
             android:inputType="textPassword"
             android:layout_marginBottom="32dp"

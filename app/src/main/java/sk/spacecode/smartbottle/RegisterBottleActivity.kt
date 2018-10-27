@@ -3,9 +3,7 @@ package sk.spacecode.smartbottle
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_register_bottle.*
 import sk.spacecode.smartbottle.dataClasses.Bottle
@@ -30,7 +28,7 @@ class RegisterBottleActivity : AppCompatActivity() {
 
         activity_register_bottle_firebase.setOnClickListener {
 
-            val password = activity_register_bottle_bottlePassword.text
+            val password = activity_personal_details_name_input.text
 
             if (password.isNotEmpty()) {
                 val bottle = Bottle(bottleId, password.toString().trim())

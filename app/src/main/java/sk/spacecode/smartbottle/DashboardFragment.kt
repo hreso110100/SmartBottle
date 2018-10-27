@@ -22,8 +22,6 @@ class DashboardFragment : Fragment() {
         val handler = Handler()
         val mTicker = object : Runnable {
             override fun run() {
-
-
                 if (MainActivity.lastAmountDrinked.toFloat() == rootView.dashboard_circular_progress.progress * moveLoadCoeficient) {
                     rootView.dashboard_circular_progress.progress += 1F
                 }
@@ -34,6 +32,7 @@ class DashboardFragment : Fragment() {
                 }
                 rootView.dashboard_last_amount_value.text = MainActivity.lastAmountDrinked.toString() + " ml"
                 rootView.dashboard_last_time_value.text = MainActivity.lastTimeDrinked
+                rootView.dashboard_last_temperature_value.text = MainActivity.lastTemperature + " °C"
                 handler.postDelayed(this, 100)
             }
         }
