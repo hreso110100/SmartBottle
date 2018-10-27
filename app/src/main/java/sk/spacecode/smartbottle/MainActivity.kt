@@ -25,11 +25,12 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    var counter = 0
+    private var counter = 0
+    private var warningLevel = 1
 
     companion object {
         var lastAmountDrinked = 0
-        var lastTimeDrinked = ""
+        var lastTimeDrinked = "-"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +43,13 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler()
         val mTicker = object : Runnable {
             override fun run() {
-
                 counter++
-                Log.i("MAIN", counter.toString())
 
-                if (counter == 30) {
+                if (counter == 10) {
+                    ConnectToBottleActivity.bluetoothSocket?.outputStream?.write(warningLevel.toString().toByteArray())
+                    if (warningLevel < 3) {
+                        warningLevel++
+                    }
                     showNotification()
                     counter = 0
                 }
@@ -97,10 +100,13 @@ class MainActivity : AppCompatActivity() {
             val gson = Gson()
             while (line != null) {
                 val actualAmountOfWater = gson.fromJson(line, DataTransfer::class.java)
+
                 if (actualAmountOfWater.objem.toInt() != 0) {
                     lastAmountDrinked = actualAmountOfWater.objem.toInt()
                     val sdf = SimpleDateFormat("dd/M hh:mm:ss", Locale.GERMAN)
                     lastTimeDrinked = sdf.format(Date())
+                    counter = 0
+                    warningLevel = 1
                 }
                 line = bufferReader.readLine()
             }
