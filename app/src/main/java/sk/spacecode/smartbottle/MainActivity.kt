@@ -1,10 +1,19 @@
 package sk.spacecode.smartbottle
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.os.AsyncTask
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import sk.spacecode.smartbottle.dataClasses.DataTransfer
@@ -13,11 +22,15 @@ import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class MainActivity : AppCompatActivity() {
+
+    var counter = 0
 
     companion object {
         var lastAmountDrinked = 0
         var currentDate = ""
+        var lastTimeDrinked = ""
     }
 
     private var deviceId = ""
@@ -32,6 +45,54 @@ class MainActivity : AppCompatActivity() {
             deviceId = "20:13:10:17:10:29"
         }
         ReadData().execute()
+
+        val handler = Handler()
+        val mTicker = object : Runnable {
+            override fun run() {
+
+                counter++
+                Log.i("MAIN", counter.toString())
+
+                if (counter == 30) {
+                    showNotification()
+                    counter = 0
+                }
+
+                handler.postDelayed(this, 1000)
+            }
+        }
+        handler.postDelayed(mTicker, 1000)
+
+    }
+
+    fun showNotification() {
+        val mBuilder = NotificationCompat.Builder(this, 1.toString())
+            .setSmallIcon(R.drawable.ic_warning_black_24dp)
+            .setContentTitle("Take a shot of water")
+            .setContentText("Drinking water in regular period makes you healthier.")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(1, mBuilder.build())
+        }
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (VERSION.SDK_INT >= VERSION_CODES.O) {
+            val name = 1.toString()
+            val descriptionText = "test"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(1.toString(), name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     inner class ReadData : AsyncTask<Void, Void, Void>() {
@@ -46,10 +107,11 @@ class MainActivity : AppCompatActivity() {
                 if (actualAmountOfWater.objem.toInt() != 0) {
                     lastAmountDrinked = actualAmountOfWater.objem.toInt()
                     val sdf = SimpleDateFormat("dd/M hh:mm:ss", Locale.GERMAN)
-                    currentDate = sdf.format(Date())
+                    lastTimeDrinked = sdf.format(Date())
                 }
                 line = bufferReader.readLine()
             }
+
             return null
         }
     }
