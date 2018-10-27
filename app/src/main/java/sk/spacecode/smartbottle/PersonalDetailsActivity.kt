@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_personal_details.*
+import kotlinx.android.synthetic.main.activity_register_bottle.*
 import org.jetbrains.anko.indeterminateProgressDialog
 import sk.spacecode.smartbottle.dataClasses.Person
 
@@ -18,12 +19,16 @@ class PersonalDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_details)
 
+        activity_personal_details_name.maxLines = 1
+        activity_personal_details_weight.maxLines = 1
+
+
         val bottleId = intent.getStringExtra("device_mac")
         mDatabase = FirebaseDatabase.getInstance().reference
 
         activity_personal_details_submit.setOnClickListener {
-            val name = activity_register_bottle_bottlePassword.text
-            val weight = activity_personal_details_name.text
+            val name = activity_personal_details_name.text
+            val weight = activity_personal_details_weight.text
 
             if (name.isNotEmpty() && weight.isNotEmpty()) {
                 val personData = Person(name.toString(), weight.toString())

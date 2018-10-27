@@ -21,8 +21,6 @@ class RegisterBottleActivity : AppCompatActivity() {
         activity_register_bottle_bottleId.maxLines = 1
 
 
-
-
         val bottleId = intent.getStringExtra("device_mac")
 
         mDatabase = FirebaseDatabase.getInstance().reference
